@@ -1,0 +1,55 @@
+{% extends 'main.html' %} {% block content %}
+
+<div
+  class="mx-auto mt-10 w-2/3 p-6 bg-gray-800 rounded-lg text-white text-center"
+>
+  <h1 class="text-4xl font-bold">Courses List</h1>
+</div>
+
+<div class="flex justify-center items-start min-h-full">
+  <div
+    class="w-2/3 h-full mx-6 my-8 p-6 bg-gray-800 text-white shadow-md rounded-lg overflow-x-hidden overflow-y-auto"
+  >
+    <table class="w-full">
+      <thead>
+        <tr>
+          <th class="border-b px-4 py-2">#</th>
+          <th class="border-b px-4 py-2">Course Name</th>
+          <th class="border-b px-4 py-2">Course Code</th>
+          <th class="border-b px-4 py-2">CR.HR</th>
+          <th class="border-b px-4 py-2">Year</th>
+          <th class="border-b px-4 py-2">Semester</th>
+          <th class="border-b px-4 py-2">Progress</th>
+          <th class="border-b px-4 py-2">Status</th>
+          <th class="border-b px-4 py-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for info in course_status_info %}
+        <tr>
+          <td class="border-b px-4 py-2">{{ forloop.counter }}</td>
+          <td class="border-b px-4 py-2">
+            <a
+              href="{{ info.course.get_absolute_url }}"
+              class="font-semibold text-blue-400 hover:text-blue-500"
+            >
+              {{ info.course.title }}
+            </a>
+          </td>
+          <td class="border-b px-4 py-2">{{ info.course.course_code }}</td>
+          <td class="border-b px-4 py-2">{{ info.course.crhr }}</td>
+          <td class="border-b px-4 py-2">{{ info.course.year }}</td>
+          <td class="border-b px-4 py-2">{{ info.course.semester }}</td>
+          <td class="border-b px-4 py-2">
+            <!-- Progress bar can be added here -->
+          </td>
+          <td class="border-b px-4 py-2">{{ info.status }}</td>
+          <td class="border-b px-4 py-2"><!-- Actions can be added here --></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% endblock content %}
+</div>

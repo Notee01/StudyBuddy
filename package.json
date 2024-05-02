@@ -1,0 +1,32 @@
+{
+  "watch": {
+    "build": {
+      "patterns": [
+        "base",
+        "quiz",
+        "course",
+        "static",
+        "material",
+        "templates",
+        "survey"
+      ],
+      "extensions": "html, js",
+      "quiet": false
+    }
+  },
+  "scripts": {
+    "build": "postcss static/css/main.css -o static/css/main.min.css",
+    "watch": "npm-watch"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.33",
+    "postcss-cli": "^11.0.0",
+    "tailwindcss": "^3.4.1"
+  },
+  "dependencies": {
+    "flowbite": "^2.2.1",
+    "jquery": "^3.7.1",
+    "npm-watch": "^0.11.0"
+  }
+}

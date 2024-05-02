@@ -1,0 +1,174 @@
+{% extends 'main.html' %} {% block content %}
+
+<script>
+  function openModal() {
+    // Show the modal by changing its display style
+    document.getElementById("modal").classList.remove("hidden");
+  }
+
+  function closeModal() {
+    // Hide the modal by changing its display style
+    document.getElementById("modal").classList.add("hidden");
+  }
+</script>
+<section class="flex bg-gray-800 transition-opacity duration-500 ease-in-out">
+  <div class="hidden sm:block ">
+    {% include "courseComponent_test.html" %}
+  </div>
+  <div
+    class="bg-gray-900 md:flex md:w-full md:w-[calc(2/3*100vw)] md:flex-col rounded-lg h-screen overflow-hidden transition-transform"
+  >
+  <div class="flex h-full w-full flex-1 items-start border-white/20">
+    <nav class="flex h-full flex-1 flex-col space-y-1 p-2">
+      <div class="">
+        <div class="flex p-3 gap-3 sm:mr-auto rounded-md bg-gray-500/10 transition-colors duration-200 text-white 
+          text-3xl font-extrabold flex-shrink-0 border-white/20 border-b">
+          <button id="toggleSidebarBtn" class="md:hidden">
+            <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+            <svg class="bg-white"fill="#000000" xmlns="http://www.w3.org/2000/svg" 
+              width="24px" height="24px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+            <path d="M78,36H38c-1.1,0-2-0.9-2-2v-4c0-1.1,0.9-2,2-2H78c1.1,0,2,0.9,2,2v4C80,35.1,79.1,36,78,36z"/>
+            <path d="M78,54H38c-1.1,0-2-0.9-2-2v-4c0-1.1,0.9-2,2-2H78c1.1,0,2,0.9,2,2v4C80,53.1,79.1,54,78,54z"/>
+            <path d="M26,54h-4c-1.1,0-2-0.9-2-2v-4c0-1.1,0.9-2,2-2h4c1.1,0,2,0.9,2,2v4C28,53.1,27.1,54,26,54z"/>
+            <path d="M26,36h-4c-1.1,0-2-0.9-2-2v-4c0-1.1,0.9-2,2-2h4c1.1,0,2,0.9,2,2v4C28,35.1,27.1,36,26,36z"/>
+            <path d="M26,72h-4c-1.1,0-2-0.9-2-2v-4c0-1.1,0.9-2,2-2h4c1.1,0,2,0.9,2,2v4C28,71.1,27.1,72,26,72z"/>
+            <path d="M78,72H38c-1.1,0-2-0.9-2-2v-4c0-1.1,0.9-2,2-2H78c1.1,0,2,0.9,2,2v4C80,71.1,79.1,72,78,72z"/>
+            </svg>
+          </button>
+          <h2 class="">ASSESSMENT</h2>
+        </div>
+      </div>
+      <div class="flex flex-1 flex-col p-4 transition-transform">
+        <div class="px-8 pt-2 pb-8 mb-4">
+          <div class="my-4">
+            <h4 class="text-lg font-bold">Assessment Details:</h4>
+            <ul class="list-disc ml-8">
+              <li>Topic: {{ quiz }}</li>
+              <li>Number of Questions: {{ quiz.number_of_questions }}</li>
+              <li>
+                <button
+                  class="text-blue-500 hover:text-blue-700"
+                  onclick="openModal()"
+                >
+                  No. of Attempts Made: {{ user_results|length }}
+                </button>
+              </li>
+              <li>Score to pass: {{ quiz.required_score_to_pass }}%</li>
+              <li>Time: {{ quiz.time }} minutes</li>
+            </ul>
+          </div>
+
+          <div class="my-4">
+            <h4 class="text-lg font-bold">Rules:</h4>
+            <ul class="list-disc ml-8">
+              <li>All questions are MCQ (multiple-choice questions)</li>
+              <li>
+                <span class="text-red-600"
+                  >Only one choice is correct among the given.</span
+                >
+              </li>
+              <li>Try to answer ASAP.</li>
+              <li>
+                If you refresh the page or go back, a new question will be
+                presented.
+              </li>
+              <li>Questions are presented randomly.</li>
+              <li>
+                You will be able to view marks immediately once you submit the
+                answer.
+              </li>
+            </ul>
+          </div>
+
+          <div class="my-4">
+            <p class="text-lg">Are you ready to start the Quiz?</p>
+            <a
+              href="{{start_quiz.get_absolute_url}}"
+              class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+              >Start Quiz</a
+            >
+          </div>
+
+          <div class="text-gray-600 text-sm mt-4">Best Of Luck, Students!</div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<div id="modal" class="hidden fixed z-10 inset-0 overflow-y-auto">
+  <div
+    class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+  >
+    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+      <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+    </div>
+
+    <!-- Modal content -->
+    <div
+      class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+    >
+      <div class="p-6 text-black">
+        <h2 class="text-lg font-semibold mb-4">Previous Attempt Details</h2>
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+              >
+                Attempt Number
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+              >
+                Score
+              </th>
+              <th
+                class="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
+              >
+                Remarks
+              </th>
+              <!-- Add more table headers as needed -->
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <!-- Dynamically populate table rows with attempt data -->
+            {% for result in user_results %}
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap">
+                {{ result.attempt_number }}
+              </td>
+              <!-- Use forloop.counter for attempt number -->
+              <td class="px-6 py-4 whitespace-nowrap">{{ result.score }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ result.result }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="p-4 bg-gray-50">
+        <button
+          type="button"
+          class="text-gray-600 hover:text-gray-800"
+          onclick="closeModal()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
+      const sidebar = document.querySelector('.hidden');
+
+      toggleSidebarBtn.addEventListener('click', function() {
+          sidebar.classList.toggle('hidden');
+
+      });
+  });
+
+  </script>
+{% endblock content %}

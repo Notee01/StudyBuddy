@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="mx-auto mt-10 w-2/3 p-6 bg-gray-800 rounded-lg text-white text-center">
+  <h1 class="text-4xl font-bold">Materials List</h1>
+</div>
+
+<div class="mt-10 mx-auto w-2/3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  {% for ebook in ebooks %}
+  <div class="bg-gray-900 rounded-lg overflow-hidden shadow-lg flex flex-col w-full">
+    <img class="w-full h-auto object-cover" src="{{ ebook.cover_image.url }}" alt="{{ ebook.title }}">
+    <div class="flex flex-col justify-between px-6 py-4">
+      <div>
+        <div class="font-bold text-xl mb-2">{{ ebook.title }}</div>
+        <p class="text-blue-400 text-base mb-2">{{ ebook.author }}</p>
+        <p class="text-gray-400 text-base">{{ ebook.short_description }}</p>
+      </div>
+      <div class="flex flex-wrap mt-4">
+        <span class="inline-block bg-gray-700 rounded-full px-3 py-1 text-sm font-semibold text-gray-200 mb-2">#{{ ebook.category }}</span>
+        <a href="{{ ebook.file.url }}" download class="inline-block bg-gray-700 rounded-full px-3 py-1 text-sm font-semibold text-blue-200 ml-2">Download</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock content %}

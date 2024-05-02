@@ -1,0 +1,15 @@
+djenv/
+djenv.bak/
+/__pycache__/
+
+*.log
+*.pot
+*.pyc
+__pycache__/
+
+conf/
+conf
+media
+media/
+
+

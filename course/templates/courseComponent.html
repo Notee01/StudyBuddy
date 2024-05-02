@@ -1,0 +1,74 @@
+{% load static %}
+
+<div class="bg-gray-900 md:inset-y-15 md:flex md:w-[310px] md:flex-col rounded-lg h-screen">
+  <div class="flex h-full min-h-0 flex-col">
+      <div class="flex h-full w-full flex-1 items-start border-white/20">
+          <nav class="flex h-full flex-1 flex-col space-y-1 p-2">
+              <h2 class="flex p-3 items-center gap-3 rounded-md bg-gray-500/10 transition-colors duration-200 text-white 
+              text-3xl font-extrabold flex-shrink-0 border-white/20 cursor-pointers border-b">{{ course.title }}</h2>
+              
+              <div class="overflow-y-auto flex-grow">
+                  <div class="p-4 text-white flex-col flex-1 overflow-y-auto border-b border-white/20">
+                      {% for topic, status, is_previous_assessment_passed, lesson_statuses in all_activities_done_dict %}
+                      <div class="mb-4 pl-4 flex flex-col gap-1">
+                          <h2 class="text-3xl font-extrabold mb-2">{{ topic.title }}</h2>
+
+                          <ul class="ml-8 pl-4 pr-4 pb-2 text-blue-400">
+                                <li class="list-disc hover:bg-gray-500/10 transition-colors duration-200 rounded-lg">
+                                    <a {% if is_previous_assessment_passed %} href="{{ topic.get_absolute_url_intro }}" {% endif %} 
+                                        class="{% if request.path == topic.get_absolute_url_intro %}text-yellow-500{% else %}{% if is_previous_assessment_passed and topic.get_absolute_url_intro %}hover:text-blue-500{% else %}text-gray-400 cursor-not-allowed{% endif %}{% endif %}">
+                                        Introduction
+                                    </a>
+                                </li>
+
+                                {% for lesson, statuses in lesson_statuses %}
+                                <li class="hover:bg-gray-500/10 transition-colors duration-200 rounded-lg relative">
+                                    {% for status in statuses %}
+                                        {% if status == 'started' %}
+                                            <img src="{% static 'images/12.svg' %}" alt="Icon" class="h-5 w-5 inline-block align-middle absolute top-1/2 transform -translate-y-1/2 left-0 opacity-100">
+                                        {% elif status == 'done' %}
+                                            <img src="{% static 'images/16.svg' %}" alt="Icon" class="h-5 w-5 inline-block align-middle absolute top-1/2 transform -translate-y-1/2 left-0 opacity-100">
+                                        {% endif %}                          
+                                    {% endfor %}
+                                    
+                                    <a {% if is_previous_assessment_passed %} href="{{ lesson.get_absolute_url }}" {% endif %} class="{% if request.path == lesson.get_absolute_url %}text-yellow-500{% elif is_previous_assessment_passed and lesson.get_absolute_url %}hover:text-blue-500{% else %}text-gray-400 cursor-not-allowed{% endif %} pl-6">
+                                        |   {{ lesson.title }} 
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            
+                                <li class="hover:bg-gray-500/10 transition-colors duration-200 rounded-lg">
+                                    <a {% if is_previous_assessment_passed and status %} href="{{ topic.get_absolute_url_confirmed }}" {% endif %}
+                                       class="{% if request.path == topic.get_absolute_url_confirmed %}text-yellow-500
+                                              {% elif is_previous_assessment_passed and status %}hover:text-blue-500
+                                              {% else %}text-gray-400 cursor-not-allowed{% endif %}"
+                                       id="assessment-link">
+                                        Assessment
+                                    </a>
+                                </li>
+                          </ul>
+                      </div>
+                      {% endfor %}
+
+                      {% if current_status == 100 %}
+                      <ul class="ml-8 pl-4 pb-2 text-blue-400">
+                          <li class="hover:bg-gray-500/10 transition-colors duration-200 rounded-lg">
+                              <a href="{% url 'survey:surveyPage' course.slug %}">Feedback Survey</a>
+                          </li>
+                      </ul>
+                      {% endif %}
+
+
+                    <div class="flex-col flex-1 overflow-y-auto border-b border-white/20">
+                        <div class="flex flex-col gap-2 text-white-gray-100">
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0">
+                        <a>PSU-UC CAMPUS</a>
+                    </div>
+                  </div>
+              </div>
+          </nav>
+      </div>
+  </div>
+</div>

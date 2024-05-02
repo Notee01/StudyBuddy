@@ -1,0 +1,25 @@
+<!-- Certificate Component Start -->
+<div class="certificate-list">
+  {% if user == request.user and user.certificates.exists %}
+    {% for certificate in user.certificates.all %}
+      {% if certificate.file %} <!-- Add this condition to check if the certificate has a file attached -->
+        <div class="certificate-card">
+          <div class="certificate-card__header">
+            <h3>{{ certificate.title }}</h3>
+          </div>
+          <div class="certificate-card__body">
+            <p>{{ certificate.description }}</p>
+            <!-- View and Download buttons -->
+            <div class="certificate-buttons">
+              <a href="{{ certificate.file.url }}" class="btnn btnn--view">View</a>
+              <a href="{{ certificate.file.url }}" download class="btnn btnn--download">Download</a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <p>No certificates available.</p>
+  {% endif %}
+</div>
+<!-- Certificate Component End -->
